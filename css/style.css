@@ -1,0 +1,13 @@
+.card.col-md-3 {
+	padding: 0;
+}
+.card .card-body:first-child {
+	padding-bottom: 0;
+}
+.card .card-body:last-child {
+	padding-bottom: 0;
+	padding-top: 0;
+}
+form label {
+	font-weight: bold;
+}
