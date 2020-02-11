@@ -1,11 +1,12 @@
-<?php require 'functions.php';
-$result = getAllItems(); ?>
+<?php 
+require 'functions.php';
+$result = getAllItems();
+?>
 <!DOCTYPE html>
 <html>
 <head>
-	<title>test</title>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-	<link rel="stylesheet" href="css/style.css">
+	<title>Index</title>
+	<?php include 'elements/header.php'; ?>
 </head>
 <body>
 	<section class="main">
@@ -13,7 +14,7 @@ $result = getAllItems(); ?>
 			<div class="row">
 				<div class="col-md-12">
 					<h1>PHP-ToDo</h1>
-					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Launch demo modal</button>
+					<button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">Insert task</button>
 					<div class="row">
 						<?php 
 						$counter = 0;
@@ -31,21 +32,21 @@ $result = getAllItems(); ?>
 								<div class="card-body">
 									<h5 class="card-title"><?=$row['title']?> - <?=$badge?></h5>
 									<p class="card-text"><?=$row['description']?></p>
-									<p class="small">Geplaatst door: <u><?=$row['user']?></u></p>
+									<p class="small">Geplaatst door: <a href="user.php?user=<?=$row['user']?>"><?=$row['user']?></a></p>
 								</div>
 								<hr>
 								<div class="card-body">
 									<ul class="list-inline text-center">
 										<li class="list-inline-item">
-											<a href="edit.php?user=<?=$row['id']?>" class="btn btn-warning">Edit</a>
+											<a href="edit.php?user_id=<?=$row['id']?>" class="btn btn-warning">Edit</a>
 										</li>
 										<li class="list-inline-item">
-											<a href="delete.php?user=<?=$row['id']?>" class="btn btn-danger">Remove</a>
+											<a href="delete.php?user_id=<?=$row['id']?>" class="btn btn-danger">Remove</a>
 										</li>
 									</ul>
 								</div>
 							</div>
-						<?php $counter++; } ?>					
+						<?php $counter++; } ?>
 					</div>
 				</div>
 			</div>
@@ -61,7 +62,7 @@ $result = getAllItems(); ?>
 					<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<form method="post" action="functions.php">
+				<form method="post" action="insert.php?action=insert_task">
 					<div class="modal-body">
 						<div class="container">
 							<div class="form-group">
@@ -76,6 +77,7 @@ $result = getAllItems(); ?>
 								<label for="exampleFormControlInput1">Toegevoegd door:</label>
 								<input type="text" class="form-control" name="user">
 							</div>
+							<input type="text" name="status" hidden="true" value="0">
 						</div>
 					</div>
 					<div class="modal-footer">
@@ -88,6 +90,5 @@ $result = getAllItems(); ?>
 	</div>
 
 </body>
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<?php include 'elements/footer.php'; ?>
 </html>
