@@ -2,6 +2,7 @@
 require 'functions.php';
 $id = $_GET['user_id'];
 $data = getItemsFromID($id);
+$lists = getAllLists();
 
 $function = $_GET['action'];
 
@@ -15,8 +16,7 @@ if (function_exists($function)) {
 <head>
 	<title>Delete</title>
 	<?php include 'elements/header.php'; ?>
-</head>
-<body>
+
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
@@ -34,19 +34,28 @@ if (function_exists($function)) {
 							<label for="exampleFormControlInput1">Toegevoegd door:</label>
 							<input type="text" class="form-control" name="user" value="<?=$data['user']?>" readonly="true">
 						</div>
+<div class="form-group">
+	<label for="inputStatus">List</label>
+	<select id="inputStatus" class="form-control" name="list" disabled="true">
+		<?php foreach ($lists as $list) {
+			$selected = '';
+			if ($data['list'] == $list['id']) {
+			 	$selected = 'selected';
+			} ?>
+			<option value="<?=$list['id']?>" <?=$selected?>><?=$list['name']?></option>
+		<?php } ?>
+	</select>
+</div>
 						<div class="form-group">
-							<label for="inputStatus">Status</label>
-							<select id="inputStatus" class="form-control" name="status" disabled="true">
-								<option value="0" <?=($data['status'] == 0 ? 'selected' : '')?>>Bezig</option>
-								<option value="1" <?=($data['status'] == 1 ? 'selected' : '')?>>Voltooid</option>
-							</select>
+							<label for="exampleFormControlInput1">Tijd nodig (in minuten):</label>
+							<input type="text" class="form-control" name="duration" value="<?=$data['duur']?>" readonly="true">
 						</div>
 						<div class="form-group">
 							<label for="exampleFormControlInput1">ID:</label>
 							<input type="text" class="form-control" name="id" readonly="true" value="<?=$data['id']?>">
 						</div>
 					</div>
-					<button type="submit" class="btn btn-success">Bewerken</button>
+					<button type="submit" class="btn btn-danger">Verwijderen</button>
 				</form>
 			</div>
 		</div>

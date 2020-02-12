@@ -29,6 +29,34 @@ function getAllItems() {
 	}
 }
 
+function getAllLists() {
+	$conn = openDatabaseConnection();
+	$query = $conn->prepare("SELECT * FROM `lists`");
+
+	if ($query->execute()) {
+		$result = $query->fetchAll();
+		$conn = null;
+		return $result;
+	} else {
+		$message = "Oeps! Er is iets fout gegaan, probeer het opnieuw.";
+		echo "<script type='text/javascript'>alert('$message'); window.location='index.php';</script>";
+	}
+}
+
+function getItemsFromListID($listID) {
+	$conn = openDatabaseConnection();
+	$query = $conn->prepare("SELECT * FROM `todo-items` WHERE `list` = :listID");
+
+	if ($query->execute([':listID' => $listID])) {
+		$result = $query->fetchAll();
+		$conn = null;
+		return $result;
+	} else {
+		$message = "Oeps! Er is iets fout gegaan, probeer het opnieuw.";
+		echo "<script type='text/javascript'>alert('$message'); window.location='index.php';</script>";
+	}
+}
+
 function getItemsFromID($id) {
 	$conn = openDatabaseConnection();
 	$query = $conn->prepare("SELECT * FROM `todo-items` WHERE `id` = :id");
@@ -43,11 +71,25 @@ function getItemsFromID($id) {
 	}
 }
 
-function getItemsFromUser($user) {
+function getItemsFromStatus($status) {
 	$conn = openDatabaseConnection();
-	$query = $conn->prepare("SELECT * FROM `todo-items` WHERE `user` = :user");
+	$query = $conn->prepare("SELECT * FROM `todo-items` WHERE `status` = :status");
 
-	if ($query->execute([':user' => $user])) {
+	if ($query->execute([':status' => $status])) {
+		$result = $query->fetchAll();
+		$conn = null;
+		return $result;
+	} else {
+		$message = "Oeps! Er is iets fout gegaan, probeer het opnieuw.";
+		echo "<script type='text/javascript'>alert('$message'); window.location='index.php';</script>";
+	}
+}
+
+function getItemsFromUser($user, $listID) {
+	$conn = openDatabaseConnection();
+	$query = $conn->prepare("SELECT * FROM `todo-items` WHERE `user` = :user AND `list` = :listID");
+
+	if ($query->execute([':user' => $user, ':listID' => $listID])) {
 		$result = $query->fetchAll();
 		$conn = null;
 		return $result;
@@ -59,7 +101,7 @@ function getItemsFromUser($user) {
 
 function insert_task($data) {
 	$conn = openDatabaseConnection();
-	$query = $conn->prepare("INSERT INTO `todo-items` (title, description, user, status) VALUES ('".implode("','", $data)."')");
+	$query = $conn->prepare("INSERT INTO `todo-items` (title, description, user, duur, list) VALUES ('".implode("','", $data)."')");
 	
 	if ($query->execute()) {
 		$message = "Succesvol toegevoegd!";
@@ -73,9 +115,9 @@ function insert_task($data) {
 
 function update_task($data) {
 	$conn = openDatabaseConnection();
-	$query = $conn->prepare('UPDATE `todo-items` SET title = :title, description = :description, user = :user, status = :status WHERE id=:id');
+	$query = $conn->prepare('UPDATE `todo-items` SET title = :title, description = :description, user = :user, duur = :duration, list = :list WHERE id=:id');
 
-	if ($query->execute([':title' => $data['title'], ':description' => $data['description'], ':user' => $data['user'], ':status' => $data['status'], ':id' => $data['id']])) {
+	if ($query->execute([':title' => $data['title'], ':description' => $data['description'], ':user' => $data['user'], ':duration' => $data['duration'], ':list' => $data['list'], ':id' => $data['id']])) {
 		$message = "Succesvol aangepast!";
 		echo "<script type='text/javascript'>alert('$message'); window.location='index.php';</script>";
 		$conn = null;

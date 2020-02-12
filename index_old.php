@@ -1,7 +1,7 @@
 <?php 
 require 'functions.php';
 $lists = getAllLists();
-//$items = getAllItems();
+$items = getAllItems();
 ?>
 <!DOCTYPE html>
 <html>
@@ -13,52 +13,43 @@ $lists = getAllLists();
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
-					<h1 class="text-center">All items sorted by list</h1>
+					<h1>PHP-ToDo</h1>
 					<button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">Insert task</button>
-
 					<div class="row">
-						<?php foreach ($lists as $list) {
-							if ($counter%3 == 0 && $counter != 0) {
-							 	echo "</div><div class='row'>";
-							 } ?>
-							<div class="col-md-4">
-								<h3 class="text-center"><?=$list['name']?></h3><br>
-								<ul class="list-group">
-									<?php 
-									$items = getItemsFromListID($list['id']);
-									if (!empty($items)) {
-										foreach ($items as $item) { ?>
-											<li class="list-group-item">
-												<div class="card">
-													<div class="card-body">
-														<h5 class="card-title"><?=$item['title']?> - <span class="badge badge-secondary"><?=$list['name']?></span></h5>
-														<p class="card-text"><?=$item['description']?></p>
-														<p class="small">Geplaatst door: <a href="user.php?user=<?=$item['user']?>"><?=$item['user']?></a></p>
-														<p>Tijd nodig: <?=$item['duur']?> minuten.</p>
-													</div>
-													<hr>
-													<div class="card-body">
-														<ul class="list-inline text-center">
-															<li class="list-inline-item">
-																<a href="edit.php?user_id=<?=$item['id']?>" class="btn btn-warning">Edit</a>
-															</li>
-															<li class="list-inline-item">
-																<a href="delete.php?user_id=<?=$item['id']?>" class="btn btn-danger">Remove</a>
-															</li>
-														</ul>
-													</div>
-												</div>
-											</li>
-										<?php } ?>
-									<?php } else {
-										echo "<h5 class='text-center'>No items found</h5>";
-									} ?>
-								</ul>
+						<?php
+						$counter = 0;
+						foreach ($items as $row) {
+							$badge = '';
+							if ($counter%4==0 && $counter!=0) {
+							 	echo '</div><div class="row">';
+							}
+							if ($row['status'] == 0) {
+							 	$badge = '<a href="status.php?status='.$row['status'].'"><span class="badge badge-secondary">Bezig</span></a>';
+							} elseif ($row['status'] == 1) {
+							 	$badge = '<a href="status.php?status='.$row['status'].'"><span class="badge badge-success">Voltooid</span></a>';
+							} ?>
+							<div class="card col-6 col-md-3 mt-2">
+								<div class="card-body">
+									<h5 class="card-title"><?=$row['title']?> - <?=$badge?></h5>
+									<p class="card-text"><?=$row['description']?></p>
+									<p class="small">Geplaatst door: <a href="user.php?user=<?=$row['user']?>"><?=$row['user']?></a></p>
+									<p>Tijd nodig: <?=$row['duur']?> minuten.</p>
+								</div>
+								<hr>
+								<div class="card-body">
+									<ul class="list-inline text-center">
+										<li class="list-inline-item">
+											<a href="edit.php?user_id=<?=$row['id']?>" class="btn btn-warning">Edit</a>
+										</li>
+										<li class="list-inline-item">
+											<a href="delete.php?user_id=<?=$row['id']?>" class="btn btn-danger">Remove</a>
+										</li>
+									</ul>
+								</div>
 							</div>
-						<?php $counter++; } ?>		
+						<?php $counter++; } ?>
 					</div>
 				</div>
-				
 			</div>
 		</div>
 	</section>
@@ -91,14 +82,7 @@ $lists = getAllLists();
 								<label for="exampleFormControlInput1">Tijd nodig (in minuten):</label>
 								<input type="text" class="form-control" name="duration">
 							</div>
-							<div class="form-group">
-								<label for="inputStatus">List</label>
-								<select id="inputStatus" class="form-control" name="list">
-									<?php foreach ($lists as $list) { ?>
-										<option value="<?=$list['id']?>"><?=$list['name']?></option>
-									<?php } ?>
-								</select>
-							</div>
+							<input type="text" name="status" hidden="true" value="0">
 						</div>
 					</div>
 					<div class="modal-footer">
