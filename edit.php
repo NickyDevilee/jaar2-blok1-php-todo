@@ -38,18 +38,18 @@ if (function_exists($function)) {
 							<label for="exampleFormControlInput1">Tijd nodig (in minuten):</label>
 							<input type="text" class="form-control" name="duration" value="<?=$data['duur']?>">
 						</div>
-<div class="form-group">
-	<label for="inputStatus">List</label>
-	<select id="inputStatus" class="form-control" name="list">
-		<?php foreach ($lists as $list) {
-			$selected = '';
-			if ($data['list'] == $list['id']) {
-			 	$selected = 'selected';
-			} ?>
-			<option value="<?=$list['id']?>" <?=$selected?>><?=$list['name']?></option>
-		<?php } ?>
-	</select>
-</div>
+						<div class="form-group">
+							<label for="inputStatus">List</label>
+							<select id="inputStatus" class="form-control" name="list">
+								<?php foreach ($lists as $list) {
+									$selected = '';
+									if ($data['list'] == $list['id']) {
+									 	$selected = 'selected';
+									} ?>
+									<option value="<?=$list['id']?>" <?=$selected?>><?=$list['name']?></option>
+								<?php } ?>
+							</select>
+						</div>
 						<div class="form-group">
 							<label for="exampleFormControlInput1">ID:</label>
 							<input type="text" class="form-control" name="id" readonly="true" value="<?=$data['id']?>">

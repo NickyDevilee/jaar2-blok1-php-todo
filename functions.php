@@ -140,4 +140,81 @@ function delete_task($id) {
 		echo "<script type='text/javascript'>alert('$message'); window.location='index.php';</script>";
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function insert_list($data) {
+	$conn = openDatabaseConnection();
+	$query = $conn->prepare("INSERT INTO `lists` (name) VALUES ('".$data."')");
+	
+	if ($query->execute()) {
+		$message = "Succesvol toegevoegd!";
+		echo "<script type='text/javascript'>alert('$message'); window.location='index.php';</script>";
+		$conn = null;
+	} else {
+		$message = "Oeps! Er is iets fout gegaan, probeer het opnieuw.";
+		echo "<script type='text/javascript'>alert('$message'); window.location='index.php';</script>";
+	}
+}
+
+function getListsFromID($id) {
+	$conn = openDatabaseConnection();
+	$query = $conn->prepare("SELECT * FROM `lists` WHERE `id` = :id");
+
+	if ($query->execute([':id' => $id])) {
+		$result = $query->fetch();
+		$conn = null;
+		return $result;
+	} else {
+		$message = "Oeps! Er is iets fout gegaan, probeer het opnieuw.";
+		echo "<script type='text/javascript'>alert('$message'); window.location='index.php';</script>";
+	}
+}
+
+function update_list($data) {
+	$conn = openDatabaseConnection();
+	$query = $conn->prepare('UPDATE `lists` SET name = :name WHERE id=:id');
+
+	if ($query->execute([':name' => $data['name'], ':id' => $data['id']])) {
+		$message = "Succesvol aangepast!";
+		echo "<script type='text/javascript'>alert('$message'); window.location='index.php';</script>";
+		$conn = null;
+	} else {
+		$message = "Oeps! Er is iets fout gegaan, probeer het opnieuw.";
+		echo "<script type='text/javascript'>alert('$message'); window.location='index.php';</script>";
+	}
+}
+
+function delete_list($id) {
+	$conn = openDatabaseConnection();
+	$query = $conn->prepare("DELETE FROM `lists` WHERE id = :id");
+
+	if ($query->execute([':id' => $id])) {
+		$message = "Succesvol verwijderd!";
+		echo "<script type='text/javascript'>alert('$message'); window.location='index.php';</script>";
+		$conn = null;
+	} else {
+		$message = "Oeps! Er is iets fout gegaan, probeer het opnieuw.";
+		echo "<script type='text/javascript'>alert('$message'); window.location='index.php';</script>";
+	}
+}
 ?>
