@@ -206,12 +206,39 @@ function update_list($data) {
 
 function delete_list($id) {
 	$conn = openDatabaseConnection();
-	$query = $conn->prepare("DELETE FROM `lists` WHERE id = :id");
 
-	if ($query->execute([':id' => $id])) {
-		$message = "Succesvol verwijderd!";
-		echo "<script type='text/javascript'>alert('$message'); window.location='index.php';</script>";
-		$conn = null;
+	$query1 = $conn->prepare("DELETE FROM `lists` WHERE id = :id");
+	$query1_status = $query1->execute([':id' => $id]);
+
+	if ($query1_status == true) {
+		$query2 = $conn->prepare("SELECT * FROM `todo-items` WHERE `list` = :listID");
+		
+		if ($query2->execute([':listID' => $id])) {
+			$result = $query2->fetchAll();
+
+			if (!empty($result)) {
+				$query3 = $conn->prepare("DELETE FROM `todo-items` WHERE list = :list_id");
+				$query3_status = $query3->execute([':list_id' => $id]);
+
+				if ($query1_status == true && $query3_status == true) {
+					$message = "Lijst & alle items succesvol verwijderd!";
+					echo "<script type='text/javascript'>alert('$message'); window.location='index.php';</script>";
+					$conn = null;
+				} else {
+					$message = "Oeps! Er is iets fout gegaan, probeer het opnieuw.";
+					echo "<script type='text/javascript'>alert('$message'); window.location='index.php';</script>";
+				}
+			} else {
+				if ($query1_status == true) {
+					$message = "Lijst succesvol verwijderd!";
+					echo "<script type='text/javascript'>alert('$message'); window.location='index.php';</script>";
+					$conn = null;
+				} else {
+					$message = "Oeps! Er is iets fout gegaan, probeer het opnieuw.";
+					echo "<script type='text/javascript'>alert('$message'); window.location='index.php';</script>";
+				}
+			}
+		}
 	} else {
 		$message = "Oeps! Er is iets fout gegaan, probeer het opnieuw.";
 		echo "<script type='text/javascript'>alert('$message'); window.location='index.php';</script>";

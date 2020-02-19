@@ -22,7 +22,8 @@ $lists = getAllLists();
 							 	echo "</div><div class='row'>";
 							 } ?>
 							<div class="col-md-4">
-								<h3 class="text-center"><?=$list['name']?></h3><br>
+								<h3 class="text-center"><?=$list['name']?></h3> - <a href="edit_list.php?list_id=<?=$list['id']?>" class="btn btn-success d-inline"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><a href="delete_list.php?list_id=<?=$list['id']?>" class="btn btn-danger d-inline"><i class="fa fa-trash" aria-hidden="true"></i></a>
+								<br>
 								<ul class="list-group">
 									<?php 
 									$items = getItemsFromListID($list['id']);
