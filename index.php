@@ -14,16 +14,21 @@ $lists = getAllLists();
 			<div class="row">
 				<div class="col-md-12">
 					<h1 class="text-center">All items sorted by list</h1>
-					<button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">Insert task</button>
+					<button type="button" class="btn btn-info" data-toggle="modal" data-target="#listModal"><i class="fa fa-list" aria-hidden="true"></i> - Insert list</button>
+					<?php if (!empty($lists)) { ?>
+						<button type="button" class="btn btn-success" data-toggle="modal" data-target="#taskModal"><i class="fa fa-plus" aria-hidden="true"></i> - Insert task</button>
+					<?php } ?>
 
 					<div class="row">
 						<?php foreach ($lists as $list) {
 							if ($counter%3 == 0 && $counter != 0) {
 							 	echo "</div><div class='row'>";
-							 } ?>
+							} ?>
 							<div class="col-md-4">
-								<h3 class="text-center"><?=$list['name']?></h3> - <a href="edit_list.php?list_id=<?=$list['id']?>" class="btn btn-success d-inline"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><a href="delete_list.php?list_id=<?=$list['id']?>" class="btn btn-danger d-inline"><i class="fa fa-trash" aria-hidden="true"></i></a>
-								<br>
+								<div class="text-center">
+									<h3 class="d-inline"><?=$list['name']?></h3> - <a href="edit_list.php?list_id=<?=$list['id']?>" class="btn btn-success d-inline"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><a href="delete_list.php?list_id=<?=$list['id']?>" class="btn btn-danger d-inline"><i class="fa fa-trash" aria-hidden="true"></i></a>
+									<br><br>
+								</div>
 								<ul class="list-group">
 									<?php 
 									$items = getItemsFromListID($list['id']);
@@ -64,7 +69,7 @@ $lists = getAllLists();
 		</div>
 	</section>
 
-	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal fade" id="taskModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -99,6 +104,34 @@ $lists = getAllLists();
 										<option value="<?=$list['id']?>"><?=$list['name']?></option>
 									<?php } ?>
 								</select>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuleren</button>
+						<button type="submit" class="btn btn-success">Opslaan</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="modal fade" id="listModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Add new ToDo</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<form method="post" action="insert_list.php?action=insert_list">
+					<div class="modal-body">
+						<div class="container">
+							<div class="form-group">
+								<label for="exampleFormControlInput1">Naam:</label>
+								<input type="text" class="form-control" placeholder="Naam van de lijst..." name="name">
 							</div>
 						</div>
 					</div>
