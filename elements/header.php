@@ -1,6 +1,8 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
 	<link rel="stylesheet" href="css/style.css">
+
 </head>
 <body>
 
@@ -13,9 +15,6 @@
 			<ul class="navbar-nav">
 				<li class="nav-item">
 					<a class="nav-link" href="index.php">Home</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="lists/index.php">Lists</a>
 				</li>
 			</ul>
 		</div>

@@ -1,7 +1,7 @@
 <?php 
 require 'functions.php';
 $lists = getAllLists();
-//$items = getAllItems();
+$allItems = getAllItems();
 ?>
 <!DOCTYPE html>
 <html>
@@ -69,28 +69,38 @@ $lists = getAllLists();
 		</div>
 	</section>
 
-	<section>
+	<section class="mt-5">
 		<div class="container">
 			<div class="row">
-				<div class="col-md-4">
-<table id="table_id" class="display">
-	<thead>
-		<tr>
-			<th>Column 1</th>
-			<th>Column 2</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<td>Row 1 Data 1</td>
-			<td>Row 1 Data 2</td>
-		</tr>
-		<tr>
-			<td>Row 2 Data 1</td>
-			<td>Row 2 Data 2</td>
-		</tr>
-	</tbody>
-</table>
+				<div class="col-md-12">
+					<table id="table_id" class="display">
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>Title</th>
+								<th>Description</th>
+								<th>User</th>
+								<th>Time</th>
+								<th>List ID</th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php 
+								if (!empty($allItems)) {
+									foreach ($allItems as $item) { ?>
+										<tr id="<?=$item['id']?>">
+											<td><?=$item['id']?></td>
+											<td><?=$item['title']?></td>
+											<td><?=$item['description']?></td>
+											<td><?=$item['user']?></td>
+											<td><?=$item['duur']?> min.</td>
+											<td><?=$item['list']?></td>
+										</tr>
+									<?php }
+								}
+							 ?>
+						</tbody>
+					</table>
 				</div>
 			</div>
 		</div>
