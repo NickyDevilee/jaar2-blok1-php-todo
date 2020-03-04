@@ -22,7 +22,7 @@ $lists = getAllLists();
 					<div class="row">
 						<?php foreach ($lists as $list) {
 							if ($counter%3 == 0 && $counter != 0) {
-							 	echo "</div><div class='row'>";
+								echo "</div><div class='row'>";
 							} ?>
 							<div class="col-md-4">
 								<div class="text-center">
@@ -65,6 +65,33 @@ $lists = getAllLists();
 					</div>
 				</div>
 				
+			</div>
+		</div>
+	</section>
+
+	<section>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-4">
+<table id="table_id" class="display">
+	<thead>
+		<tr>
+			<th>Column 1</th>
+			<th>Column 2</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Row 1 Data 1</td>
+			<td>Row 1 Data 2</td>
+		</tr>
+		<tr>
+			<td>Row 2 Data 1</td>
+			<td>Row 2 Data 2</td>
+		</tr>
+	</tbody>
+</table>
+				</div>
 			</div>
 		</div>
 	</section>
