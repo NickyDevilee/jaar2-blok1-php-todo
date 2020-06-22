@@ -2,7 +2,7 @@
 function openDatabaseConnection() {
 	$servername = "localhost";
 	$username = "root";
-	$password = "mysql";
+	$password = "";
 
 	try {
 		$conn = new PDO("mysql:host=$servername;dbname=php-todo", $username, $password);
@@ -140,27 +140,6 @@ function delete_task($id) {
 		echo "<script type='text/javascript'>alert('$message'); window.location='index.php';</script>";
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 function insert_list($data) {
 	$conn = openDatabaseConnection();

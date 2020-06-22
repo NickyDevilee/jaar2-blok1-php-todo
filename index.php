@@ -2,6 +2,19 @@
 require 'functions.php';
 $lists = getAllLists();
 $allItems = getAllItems();
+
+if (isset($_GET['action'])) {
+	$function = $_GET['action'];
+	if ($_GET['action'] == 'insert_list') {
+		$form_data = $_POST['name'];
+	} else {
+		$form_data = $_POST;
+	}
+
+	if (function_exists($function)) {
+		$function($form_data);
+	}
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -20,7 +33,9 @@ $allItems = getAllItems();
 					<?php } ?>
 
 					<div class="row">
-						<?php foreach ($lists as $list) {
+						<?php 
+						$counter = 0;
+						foreach ($lists as $list) {
 							if ($counter%3 == 0 && $counter != 0) {
 								echo "</div><div class='row'>";
 							} ?>
@@ -46,10 +61,10 @@ $allItems = getAllItems();
 													<div class="card-body">
 														<ul class="list-inline text-center">
 															<li class="list-inline-item">
-																<a href="edit.php?user_id=<?=$item['id']?>" class="btn btn-warning">Edit</a>
+																<a href="crud/edit.php?user_id=<?=$item['id']?>" class="btn btn-warning">Edit</a>
 															</li>
 															<li class="list-inline-item">
-																<a href="delete.php?user_id=<?=$item['id']?>" class="btn btn-danger">Remove</a>
+																<a href="crud/delete.php?user_id=<?=$item['id']?>" class="btn btn-danger">Remove</a>
 															</li>
 														</ul>
 													</div>
@@ -115,7 +130,7 @@ $allItems = getAllItems();
 					<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<form method="post" action="insert.php?action=insert_task">
+				<form method="post" action="index.php?action=insert_task">
 					<div class="modal-body">
 						<div class="container">
 							<div class="form-group">
@@ -163,7 +178,7 @@ $allItems = getAllItems();
 					<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<form method="post" action="insert_list.php?action=insert_list">
+				<form method="post" action="index.php?action=insert_list">
 					<div class="modal-body">
 						<div class="container">
 							<div class="form-group">
