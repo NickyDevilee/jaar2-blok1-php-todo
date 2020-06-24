@@ -4,15 +4,6 @@ $id = $_GET['list_id'];
 $data = getListsFromID($id);
 
 $items_in_list = getItemsFromListID($id);
-
-if (isset($_GET['action'])) {
-	$function = $_GET['action'];
-
-	if (function_exists($function)) {
-		$function($_POST['id']);
-	}
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -24,7 +15,7 @@ if (isset($_GET['action'])) {
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
-				<form method="post" action="delete_list.php?action=delete_list">
+				<form method="post" action="../action.php?action=deleteList">
 					<div class="container">
 						<div class="form-group">
 							<label for="exampleFormControlInput1">Name:</label>

@@ -2,19 +2,6 @@
 require 'functions.php';
 $lists = getAllLists();
 $allItems = getAllItems();
-
-if (isset($_GET['action'])) {
-	$function = $_GET['action'];
-	if ($_GET['action'] == 'insert_list') {
-		$form_data = $_POST['name'];
-	} else {
-		$form_data = $_POST;
-	}
-
-	if (function_exists($function)) {
-		$function($form_data);
-	}
-}
 ?>
 <!DOCTYPE html>
 <html>
@@ -41,7 +28,7 @@ if (isset($_GET['action'])) {
 							} ?>
 							<div class="col-md-4">
 								<div class="text-center">
-									<h3 class="d-inline"><?=$list['name']?></h3> - <a href="edit_list.php?list_id=<?=$list['id']?>" class="btn btn-success d-inline"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><a href="delete_list.php?list_id=<?=$list['id']?>" class="btn btn-danger d-inline"><i class="fa fa-trash" aria-hidden="true"></i></a>
+									<h3 class="d-inline"><?=$list['name']?></h3> - <a href="crud/edit_list.php?list_id=<?=$list['id']?>" class="btn btn-success d-inline"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><a href="crud/delete_list.php?list_id=<?=$list['id']?>" class="btn btn-danger d-inline"><i class="fa fa-trash" aria-hidden="true"></i></a>
 									<br><br>
 								</div>
 								<ul class="list-group">
@@ -130,7 +117,7 @@ if (isset($_GET['action'])) {
 					<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<form method="post" action="index.php?action=insert_task">
+				<form method="post" action="action.php?action=insertTask">
 					<div class="modal-body">
 						<div class="container">
 							<div class="form-group">
@@ -173,12 +160,12 @@ if (isset($_GET['action'])) {
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">Add new ToDo</h5>
+					<h5 class="modal-title" id="exampleModalLabel">Add new list</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<form method="post" action="index.php?action=insert_list">
+				<form method="post" action="action.php?action=insertList">
 					<div class="modal-body">
 						<div class="container">
 							<div class="form-group">

@@ -2,17 +2,7 @@
 require '../functions.php';
 $id = $_GET['user_id'];
 $data = getItemsFromID($id);
-$lists = getAllLists();
-
-if (isset($_GET['action'])) {
-	$function = $_GET['action'];
-	$form_data = $_POST;
-
-	if (function_exists($function)) {
-		$function($form_data);
-	}
-}
-	
+$lists = getAllLists();	
 ?>
 <!DOCTYPE html>
 <html>
@@ -23,7 +13,7 @@ if (isset($_GET['action'])) {
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
-				<form method="post" action="edit.php?action=update_task">
+				<form method="post" action="../action.php?action=updateTask">
 					<div class="container">
 						<div class="form-group">
 							<label for="exampleFormControlInput1">Titel:</label>

@@ -1,5 +1,6 @@
 <?php 
-function openDatabaseConnection() {
+function openDatabaseConnection()
+{
 	$servername = "localhost";
 	$username = "root";
 	$password = "";
@@ -15,7 +16,8 @@ function openDatabaseConnection() {
 	}
 }
 
-function getAllItems() {
+function getAllItems()
+{
 	$conn = openDatabaseConnection();
 	$query = $conn->prepare("SELECT * FROM `todo-items`");
 
@@ -24,12 +26,14 @@ function getAllItems() {
 		$conn = null;
 		return $result;
 	} else {
-		$message = "Oeps! Er is iets fout gegaan, probeer het opnieuw.";
-		echo "<script type='text/javascript'>alert('$message'); window.location='index.php';</script>";
+		// $message = "Oeps! Er is iets fout gegaan, probeer het opnieuw.";
+		// echo "<script type='text/javascript'>alert('$message'); window.location='index.php';</script>";
+		header('location: index.php');
 	}
 }
 
-function getAllLists() {
+function getAllLists()
+{
 	$conn = openDatabaseConnection();
 	$query = $conn->prepare("SELECT * FROM `lists`");
 
@@ -38,12 +42,14 @@ function getAllLists() {
 		$conn = null;
 		return $result;
 	} else {
-		$message = "Oeps! Er is iets fout gegaan, probeer het opnieuw.";
-		echo "<script type='text/javascript'>alert('$message'); window.location='index.php';</script>";
+		// $message = "Oeps! Er is iets fout gegaan, probeer het opnieuw.";
+		// echo "<script type='text/javascript'>alert('$message'); window.location='index.php';</script>";
+		header('location: index.php');
 	}
 }
 
-function getItemsFromListID($listID) {
+function getItemsFromListID($listID)
+{
 	$conn = openDatabaseConnection();
 	$query = $conn->prepare("SELECT * FROM `todo-items` WHERE `list` = :listID");
 
@@ -52,12 +58,14 @@ function getItemsFromListID($listID) {
 		$conn = null;
 		return $result;
 	} else {
-		$message = "Oeps! Er is iets fout gegaan, probeer het opnieuw.";
-		echo "<script type='text/javascript'>alert('$message'); window.location='index.php';</script>";
+		// $message = "Oeps! Er is iets fout gegaan, probeer het opnieuw.";
+		// echo "<script type='text/javascript'>alert('$message'); window.location='index.php';</script>";
+		header('location: index.php');
 	}
 }
 
-function getItemsFromID($id) {
+function getItemsFromID($id)
+{
 	$conn = openDatabaseConnection();
 	$query = $conn->prepare("SELECT * FROM `todo-items` WHERE `id` = :id");
 
@@ -66,12 +74,14 @@ function getItemsFromID($id) {
 		$conn = null;
 		return $result;
 	} else {
-		$message = "Oeps! Er is iets fout gegaan, probeer het opnieuw.";
-		echo "<script type='text/javascript'>alert('$message'); window.location='index.php';</script>";
+		// $message = "Oeps! Er is iets fout gegaan, probeer het opnieuw.";
+		// echo "<script type='text/javascript'>alert('$message'); window.location='index.php';</script>";
+		header('location: index.php');
 	}
 }
 
-function getItemsFromStatus($status) {
+function getItemsFromStatus($status)
+{
 	$conn = openDatabaseConnection();
 	$query = $conn->prepare("SELECT * FROM `todo-items` WHERE `status` = :status");
 
@@ -80,12 +90,14 @@ function getItemsFromStatus($status) {
 		$conn = null;
 		return $result;
 	} else {
-		$message = "Oeps! Er is iets fout gegaan, probeer het opnieuw.";
-		echo "<script type='text/javascript'>alert('$message'); window.location='index.php';</script>";
+		// $message = "Oeps! Er is iets fout gegaan, probeer het opnieuw.";
+		// echo "<script type='text/javascript'>alert('$message'); window.location='index.php';</script>";
+		header('location: index.php');
 	}
 }
 
-function getItemsFromUser($user, $listID) {
+function getItemsFromUser($user, $listID)
+{
 	$conn = openDatabaseConnection();
 	$query = $conn->prepare("SELECT * FROM `todo-items` WHERE `user` = :user AND `list` = :listID");
 
@@ -94,68 +106,82 @@ function getItemsFromUser($user, $listID) {
 		$conn = null;
 		return $result;
 	} else {
-		$message = "Oeps! Er is iets fout gegaan, probeer het opnieuw.";
-		echo "<script type='text/javascript'>alert('$message'); window.location='index.php';</script>";
+		// $message = "Oeps! Er is iets fout gegaan, probeer het opnieuw.";
+		// echo "<script type='text/javascript'>alert('$message'); window.location='index.php';</script>";
+		header('location: index.php');
 	}
 }
 
-function insert_task($data) {
+function insertTask($data)
+{
 	$conn = openDatabaseConnection();
 	$query = $conn->prepare("INSERT INTO `todo-items` (title, description, user, duur, list) VALUES ('".implode("','", $data)."')");
 	
 	if ($query->execute()) {
-		$message = "Succesvol toegevoegd!";
-		echo "<script type='text/javascript'>alert('$message'); window.location='index.php';</script>";
+		// $message = "Succesvol toegevoegd!";
+		// echo "<script type='text/javascript'>alert('$message'); window.location='index.php';</script>";
 		$conn = null;
+		header('location: index.php');
 	} else {
-		$message = "Oeps! Er is iets fout gegaan, probeer het opnieuw.";
-		echo "<script type='text/javascript'>alert('$message'); window.location='index.php';</script>";
+		// $message = "Oeps! Er is iets fout gegaan, probeer het opnieuw.";
+		// echo "<script type='text/javascript'>alert('$message'); window.location='index.php';</script>";
+		header('location: index.php');
 	}
 }
 
-function update_task($data) {
+function updateTask($data)
+{
 	$conn = openDatabaseConnection();
 	$query = $conn->prepare('UPDATE `todo-items` SET title = :title, description = :description, user = :user, duur = :duration, list = :list WHERE id=:id');
 
 	if ($query->execute([':title' => $data['title'], ':description' => $data['description'], ':user' => $data['user'], ':duration' => $data['duration'], ':list' => $data['list'], ':id' => $data['id']])) {
-		$message = "Succesvol aangepast!";
-		echo "<script type='text/javascript'>alert('$message'); window.location='index.php';</script>";
+		// $message = "Succesvol aangepast!";
+		// echo "<script type='text/javascript'>alert('$message'); window.location='index.php';</script>";
 		$conn = null;
+		header('location: index.php');
 	} else {
-		$message = "Oeps! Er is iets fout gegaan, probeer het opnieuw.";
-		echo "<script type='text/javascript'>alert('$message'); window.location='index.php';</script>";
+		// $message = "Oeps! Er is iets fout gegaan, probeer het opnieuw.";
+		// echo "<script type='text/javascript'>alert('$message'); window.location='index.php';</script>";
+		header('location: index.php');
 	}
 }
 
-function delete_task($id) {
+function deleteTask($id)
+{
 	$conn = openDatabaseConnection();
 	$query = $conn->prepare("DELETE FROM `todo-items` WHERE id = :id");
 
 	if ($query->execute([':id' => $id])) {
-		$message = "Succesvol verwijderd!";
-		echo "<script type='text/javascript'>alert('$message'); window.location='index.php';</script>";
+		// $message = "Succesvol verwijderd!";
+		// echo "<script type='text/javascript'>alert('$message'); window.location='index.php';</script>";
 		$conn = null;
+		header('location: index.php');
 	} else {
-		$message = "Oeps! Er is iets fout gegaan, probeer het opnieuw.";
-		echo "<script type='text/javascript'>alert('$message'); window.location='index.php';</script>";
+		// $message = "Oeps! Er is iets fout gegaan, probeer het opnieuw.";
+		// echo "<script type='text/javascript'>alert('$message'); window.location='index.php';</script>";
+		header('location: index.php');
 	}
 }
 
-function insert_list($data) {
+function insertList($data)
+{
 	$conn = openDatabaseConnection();
 	$query = $conn->prepare("INSERT INTO `lists` (name) VALUES ('".$data."')");
 	
 	if ($query->execute()) {
-		$message = "Succesvol toegevoegd!";
-		echo "<script type='text/javascript'>alert('$message'); window.location='index.php';</script>";
+		// $message = "Succesvol toegevoegd!";
+		// echo "<script type='text/javascript'>alert('$message'); window.location='index.php';</script>";
 		$conn = null;
+		header('location: index.php');
 	} else {
-		$message = "Oeps! Er is iets fout gegaan, probeer het opnieuw.";
-		echo "<script type='text/javascript'>alert('$message'); window.location='index.php';</script>";
+		// $message = "Oeps! Er is iets fout gegaan, probeer het opnieuw.";
+		// echo "<script type='text/javascript'>alert('$message'); window.location='index.php';</script>";
+		header('location: index.php');
 	}
 }
 
-function getListsFromID($id) {
+function getListsFromID($id)
+{
 	$conn = openDatabaseConnection();
 	$query = $conn->prepare("SELECT * FROM `lists` WHERE `id` = :id");
 
@@ -164,26 +190,31 @@ function getListsFromID($id) {
 		$conn = null;
 		return $result;
 	} else {
-		$message = "Oeps! Er is iets fout gegaan, probeer het opnieuw.";
-		echo "<script type='text/javascript'>alert('$message'); window.location='index.php';</script>";
+		// $message = "Oeps! Er is iets fout gegaan, probeer het opnieuw.";
+		// echo "<script type='text/javascript'>alert('$message'); window.location='index.php';</script>";
+		header('location: index.php');
 	}
 }
 
-function update_list($data) {
+function updateList($data)
+{
 	$conn = openDatabaseConnection();
 	$query = $conn->prepare('UPDATE `lists` SET name = :name WHERE id=:id');
 
 	if ($query->execute([':name' => $data['name'], ':id' => $data['id']])) {
-		$message = "Succesvol aangepast!";
-		echo "<script type='text/javascript'>alert('$message'); window.location='index.php';</script>";
+		// $message = "Succesvol aangepast!";
+		// echo "<script type='text/javascript'>alert('$message'); window.location='index.php';</script>";
 		$conn = null;
+		header('location: index.php');
 	} else {
-		$message = "Oeps! Er is iets fout gegaan, probeer het opnieuw.";
-		echo "<script type='text/javascript'>alert('$message'); window.location='index.php';</script>";
+		// $message = "Oeps! Er is iets fout gegaan, probeer het opnieuw.";
+		// echo "<script type='text/javascript'>alert('$message'); window.location='index.php';</script>";
+		header('location: index.php');
 	}
 }
 
-function delete_list($id) {
+function deleteList($id)
+{
 	$conn = openDatabaseConnection();
 
 	$query1 = $conn->prepare("DELETE FROM `lists` WHERE id = :id");
@@ -200,27 +231,32 @@ function delete_list($id) {
 				$query3_status = $query3->execute([':list_id' => $id]);
 
 				if ($query1_status == true && $query3_status == true) {
-					$message = "Lijst & alle items succesvol verwijderd!";
-					echo "<script type='text/javascript'>alert('$message'); window.location='index.php';</script>";
+					// $message = "Lijst & alle items succesvol verwijderd!";
+					// echo "<script type='text/javascript'>alert('$message'); window.location='index.php';</script>";
 					$conn = null;
+					header('location: index.php');
 				} else {
-					$message = "Oeps! Er is iets fout gegaan, probeer het opnieuw.";
-					echo "<script type='text/javascript'>alert('$message'); window.location='index.php';</script>";
+					// $message = "Oeps! Er is iets fout gegaan, probeer het opnieuw.";
+					// echo "<script type='text/javascript'>alert('$message'); window.location='index.php';</script>";
+					header('location: index.php');
 				}
 			} else {
 				if ($query1_status == true) {
-					$message = "Lijst succesvol verwijderd!";
-					echo "<script type='text/javascript'>alert('$message'); window.location='index.php';</script>";
+					// $message = "Lijst succesvol verwijderd!";
+					// echo "<script type='text/javascript'>alert('$message'); window.location='index.php';</script>";
 					$conn = null;
+					header('location: index.php');
 				} else {
-					$message = "Oeps! Er is iets fout gegaan, probeer het opnieuw.";
-					echo "<script type='text/javascript'>alert('$message'); window.location='index.php';</script>";
+					// $message = "Oeps! Er is iets fout gegaan, probeer het opnieuw.";
+					// echo "<script type='text/javascript'>alert('$message'); window.location='index.php';</script>";
+					header('location: index.php');
 				}
 			}
 		}
 	} else {
-		$message = "Oeps! Er is iets fout gegaan, probeer het opnieuw.";
-		echo "<script type='text/javascript'>alert('$message'); window.location='index.php';</script>";
+		// $message = "Oeps! Er is iets fout gegaan, probeer het opnieuw.";
+		// echo "<script type='text/javascript'>alert('$message'); window.location='index.php';</script>";
+		header('location: index.php');
 	}
 }
 ?>
